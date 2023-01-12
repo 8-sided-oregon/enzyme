@@ -246,7 +246,6 @@ char *recv_request(int client) {
         }
 
         buf_size += data_cnt;
-        o_log(L_DEBUG, "data_cnt: %d", data_cnt);
         end = memsrch(recved, buf_size, "\r\n\r\n", 4);
 
         if (end != NULL)

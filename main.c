@@ -211,8 +211,6 @@ int main(int argc, char **argv) {
         len1 = sizeof(client_addr);
 
         if (conn_flag) {
-            o_log(L_DEBUG, "conn_flag was set.");
-
             client = accept(server, &client_addr, (socklen_t *)&len1);
         }
         else {
@@ -241,7 +239,6 @@ int main(int argc, char **argv) {
             cur_conn = next_conn(cur_conn);
             o_log(L_DEBUG, "Switching to cur_conn: %p", cur_conn);
             if (cur_conn == NULL) {
-                o_log(L_DEBUG, "cur_conn was nil, setting conn_flag...");
                 conn_flag = true;
                 continue;
             }
@@ -259,8 +256,6 @@ int main(int argc, char **argv) {
             cur_conn = xmalloc(sizeof(struct connection));
             memset(cur_conn, 0, sizeof(struct connection));
             cur_conn->client_fd = client;
-
-            o_log(L_DEBUG, "%p: Created node", cur_conn);
 
             push_queue(cur_conn, HEAP_ALLOCATED);
             http_status = handle_conn_start(cur_conn);
@@ -303,7 +298,7 @@ error:
         if (http_status == R_OKAY)
             continue;
 
-        o_log(L_INFO, "Client returned w/ %d.", http_status);
+        o_log(L_INFO, "Client returned with %d.", http_status);
         
         memset(&err_resp, 0, sizeof(err_resp));
         err_resp.ret_code = http_status;

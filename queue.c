@@ -49,8 +49,6 @@ int remove_node(struct connection *conn) {
     if (n->flags & HEAP_ALLOCATED)
         free(n->conn);
 
-    o_log(L_DEBUG, "conn: %p, n: %p, n->conn: %p, n->next: %p, n->prev: %p", conn, n, n->conn, n->next, n->prev);
-
     p = n->next;
     n = n->prev;
 
